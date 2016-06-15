@@ -29,6 +29,7 @@ Options:
 
 # Example Output
 
+~~~
 ↪ ./satellite-cert-pprint.py -f ~/Megacorp-sat5.cert
 ================================================================================
 product                                                         MegaCorp - Sat 5
@@ -73,4 +74,5 @@ rhel-server-7-v2vwin                                     526001           500500
 satellite-version                                                            5.7
 generation                                                                     2
 ================================================================================
+~~~
 
