@@ -25,12 +25,16 @@ Options:
   -h, --help            show this help message and exit
   -f FILENAME, --filename=FILENAME
                         path to Satellite Entitlement certificate
+  --family=FAMILY       print only channel families that have this string
 ~~~
 
 # Example Output
 
 ~~~
 ↪ ./satellite-cert-pprint.py -f ~/Megacorp-sat5.cert
+================================================================================
+Filename                                       /home/satadmin/Megacorp-sat5.cert
+Showing all channel families
 ================================================================================
 product                                                         MegaCorp - Sat 5
 owner                                                                   MEGACORP
@@ -70,6 +74,42 @@ rhel-server-7-rs-eus                                     525000           500000
 rhel-server-7-rs-htb                                     525000           500000
 rhel-server-7-sap                                        525000           500000
 rhel-server-7-v2vwin                                     526001           500500
+================================================================================
+satellite-version                                                            5.7
+generation                                                                     2
+================================================================================
+~~~
+
+# Example Output using the --family option
+
+
+The `--family` option can be used to limit which channel families I wish to print. 
+For instance, if I wanted to limit the output to only families which included
+*sap* and *rhgs*, I could run:
+~~~
+↪ ./satellite-cert-pprint.py -f ~/Megacorp-sat5.cert --family sap --family rhgs
+================================================================================
+Filename                                       /home/satadmin/Megacorp-sat5.cert
+Viewing only channel families listed below
+sap
+rhgs
+================================================================================
+product                                                         MegaCorp - Sat 5
+owner                                                                   MEGACORP
+issued                                                       2015-10-21 16:27:34
+expires                                                      2021-12-31 00:00:00
+slots                                                                    1026466
+monitoring-slots                                                          525000
+provisioning-slots                                                       1026461
+virtualization_host                                                        25460
+virtualization_host_platform                                               25000
+================================================================================
+Channel Family                                         Quantity             Flex
+================================================================================
+rhel-server-7-rhgs                                       525003           500000
+rhel-server-7-rhgs-bigdata                               525003           500000
+rhel-server-7-rhgs-rhsc                                  525003           500000
+rhel-server-7-sap                                        525000           500000
 ================================================================================
 satellite-version                                                            5.7
 generation                                                                     2
