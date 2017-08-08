@@ -22,6 +22,7 @@ from xml.dom import minidom
 
 parser = OptionParser()
 parser.add_option("-f", "--filename", dest="filename", help="path to Satellite Entitlement certificate", metavar="FILENAME")
+parser.add_option("--family", dest="family", help="print only channel families that have this string", action="append", default=[])
 (options, args) = parser.parse_args()
 
 if not ( options.filename ):
@@ -38,6 +39,14 @@ if not os.path.isfile(filename):
 
 xmldoc = minidom.parse(filename)
 itemlist = xmldoc.getElementsByTagName('rhn-cert-field') 
+print "=" * 80
+print "%-10s%70s" % ("Filename", filename)
+if options.family:
+    print "%-45s" % "Viewing only channel families listed below"
+    for option in options.family:
+        print "%s" % option
+else:
+    print "%-45s" % "Showing all channel families" 
 print "=" * 80
 channel = False
 for s in itemlist :
@@ -58,7 +67,13 @@ for s in itemlist :
 		    except:
 			flex = 0
 		    family = s.attributes['family'].value
-		    print "%-45s%18s%17s" % (family,quantity,flex)
+                    if options.family:
+                        for option in options.family:
+                            if option in family:
+                                print "%-45s%18s%17s" % (family,quantity,flex)
+                    else:
+                        print "%-45s%18s%17s" % (family,quantity,flex)
+
 	    else:
 		    print "%-40s%40s" % (s.attributes['name'].value, s.childNodes[0].nodeValue)
 
